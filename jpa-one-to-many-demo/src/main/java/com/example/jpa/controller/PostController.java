@@ -9,8 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 @RestController
 public class PostController {
 
@@ -23,12 +21,12 @@ public class PostController {
     }
 
     @PostMapping("/posts")
-    public Post createPost(@Valid @RequestBody Post post) {
+    public Post createPost(@RequestBody Post post) {
         return postRepository.save(post);
     }
 
     @PutMapping("/posts/{postId}")
-    public Post updatePost(@PathVariable Long postId, @Valid @RequestBody Post postRequest) {
+    public Post updatePost(@PathVariable Long postId, @RequestBody Post postRequest) {
         return postRepository.findById(postId).map(post -> {
             post.setTitle(postRequest.getTitle());
             post.setDescription(postRequest.getDescription());

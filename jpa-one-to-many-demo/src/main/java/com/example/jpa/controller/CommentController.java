@@ -10,8 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 @RestController
 public class CommentController {
 
@@ -29,7 +27,7 @@ public class CommentController {
 
     @PostMapping("/posts/{postId}/comments")
     public Comment createComment(@PathVariable (value = "postId") Long postId,
-                                 @Valid @RequestBody Comment comment) {
+                                 @RequestBody Comment comment) {
         return postRepository.findById(postId).map(post -> {
             comment.setPost(post);
             return commentRepository.save(comment);
@@ -39,7 +37,7 @@ public class CommentController {
     @PutMapping("/posts/{postId}/comments/{commentId}")
     public Comment updateComment(@PathVariable (value = "postId") Long postId,
                                  @PathVariable (value = "commentId") Long commentId,
-                                 @Valid @RequestBody Comment commentRequest) {
+                                 @RequestBody Comment commentRequest) {
         if(!postRepository.existsById(postId)) {
             throw new ResourceNotFoundException("PostId " + postId + " not found");
         }
